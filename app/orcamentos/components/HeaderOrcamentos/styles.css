@@ -1,0 +1,40 @@
+.orcamento{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #abb9d6;
+    border-top: 1px #d2d2d2 solid;
+}
+.infos {
+    color: #3d4e72;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.toggle_visibility{
+    background-color: #5D78B1;
+    color: white;
+    border: 1px solid #dddddd;
+    text-align: center;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.danger{
+    color: red;
+}
+.warning{
+    color: orange;
+}
+.safe{
+    color: green;
+}

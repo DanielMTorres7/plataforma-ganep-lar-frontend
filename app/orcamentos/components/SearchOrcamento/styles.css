@@ -1,0 +1,9 @@
+.search__orcamento{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #abb9d6;
+    border-top: 1px #d2d2d2 solid;
+}
