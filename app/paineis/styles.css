@@ -1,0 +1,74 @@
+.dashboard{
+    display: flex;
+    flex-wrap: wrap;
+    height: calc(100vh - 80px);
+    width: 100%;
+    align-items: flex-start;
+}
+.dashboard .filters{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 10px;
+    width: 300px;
+}
+.dashboard .filters .filter{
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.dashboard .values{
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.dashboard .values .info-shower,
+.dashboard .values .info-shower-full{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: calc(50% - 5px);
+}
+.dashboard .values .info-shower-full{
+    width: 100%;
+}
+
+.dashboard__content{
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 300px);
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+}
+.dashboard__content__table,
+.dashboard__content__chart,
+.dashboard__content__chart__full{
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    overflow-y: auto;
+    height: 300px;
+    padding: 10px;
+}
+.dashboard__content__chart{
+}
+.dashboard__content__chart__full{
+    width: 100%;
+}
+
+
+.chart{
+    width: 100%;
+    height: 300px;
+    margin-bottom: 10px;
+}

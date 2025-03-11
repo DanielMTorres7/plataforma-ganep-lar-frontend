@@ -12,9 +12,8 @@ const InfoCellCompoent = (props: InfoCellCompoentProps) => {
     return (
         <>
             <CustomModal 
-            opener={
-                <>{value}</>
-            }>
+                opener={<>{value}</>}
+            >
                 <div>
                     <h2>Entradas</h2>
                     <ul>

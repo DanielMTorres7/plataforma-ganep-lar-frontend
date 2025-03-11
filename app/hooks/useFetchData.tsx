@@ -4,9 +4,10 @@ interface FetchDataOptions<T> {
     endpoint: string;
     body?: object;
     defaultData?: T;
+    preFilter?: (data: T) => T;
 }
 
-const useFetchData = <T,>({ endpoint, body, defaultData }: FetchDataOptions<T>) => {
+const useFetchData = <T,>({ endpoint, body, defaultData , preFilter}: FetchDataOptions<T>) => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<T>(defaultData as T);
 
@@ -45,6 +46,13 @@ const useFetchData = <T,>({ endpoint, body, defaultData }: FetchDataOptions<T>) 
         setLoading(true);
         fetchProtectedData();
     }, [fetchProtectedData, memoizedBody]); // Dependências do useEffect
+
+
+    useEffect(() => {
+        if (preFilter) {
+            setData(preFilter(data));
+        }
+    }, [data, preFilter]);
 
     return { data, loading };
 };

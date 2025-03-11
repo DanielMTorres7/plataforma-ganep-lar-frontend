@@ -44,7 +44,7 @@ export default function OrcamentosPage() {
             custo_receita_imp: '',
             children: [],
         },
-        body: searchDate ? { data: searchDate } : {},
+        body: {},
     });
 
     if (loading) {

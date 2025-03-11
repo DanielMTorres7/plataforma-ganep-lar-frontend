@@ -1,7 +1,7 @@
 'use client';
 
 import "./globals.css";
-import HeaderComponent from "./components/layout/Header/Header";
+import Sidebar from "./components/layout/Sidebar/component";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "./hooks/useAuth";
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <HeaderComponent/>
+        <Sidebar/>
         {children}
       </body>
     </html>

@@ -1,0 +1,95 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #2c3e50;
+  color: white;
+  transition: width 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+body {
+  transition: width 0.3s ease;
+}
+.sidebar.minimized {
+  width: 60px;
+}
+
+.toggle-btn {
+  background-color: #34495e;
+  color: white;
+  border: none;
+  padding: 10px 25px 10px 0;
+  width: 100%;
+  cursor: pointer;
+  text-align: right;
+}
+
+.sidebar-content {
+  padding: 20px 0 10px 10px;
+}
+
+.menu-item {
+  margin-bottom: 10px;
+}
+
+.menu-item button {
+  border-radius: 25px 0 0 25px;
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item button:hover {
+  background-color: #34495e;
+}
+
+.menu-item.opened button{
+  background-color: #fff!important;
+    color: #2c3e50!important;
+    position: relative;
+}
+.menu-item.opened button::after {
+    content: '';
+    height: 2em;
+    width: 2em;
+    position: absolute;
+    bottom: -2em;
+    right: 0em;
+    border-radius: 0 15px 0 0;
+    box-shadow: 0 -16px 0 0 #ffffff;
+    z-index: -1;
+}
+.menu-item.opened button::before {
+    content: '';
+    height: 2em;
+    width: 2em;
+    position: absolute;
+    top: -2em;
+    right: 0em;
+    border-radius: 0 0 15px 0;
+    box-shadow: 0 16px 0 0 #ffffff;
+    z-index: -1;
+}
+
+
+.icon {
+  margin-right: 10px;
+}
+
+.label {
+  flex-grow: 1;
+}
+
+.arrow {
+  margin-left: auto;
+}
+
