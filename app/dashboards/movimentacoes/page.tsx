@@ -11,6 +11,7 @@ import BarChart from "@/app/components/ui/BarChart/component";
 import InfoShower from "../components/InfoShower/component";
 import useFetchData from '@/app/hooks/useFetchData';
 import { useDateRange } from "@/app/hooks/useDateRange";
+import AtendimentosInfoShower from "./components/AtendimentosInfoShower/component";
 
 interface KeyValue {
     label: string;
@@ -29,12 +30,26 @@ interface DispositivosData {
         };
     }>;
     operadoras: KeyValue[];
+    motivos: {
+        [key: string]: antendimento[];
+    };
 }
 interface DfAtendimento {
     mes: string;
     atendimentos: number;
     altas: number;
     entradas: number;
+}
+
+interface antendimento {
+    ENTRADA: string;
+    STATUS: string;
+    ALTA: string;
+    MOTIVO_ALTA: string;
+    OPERADORA: string;
+    PACIENTE: string;
+    ATENDIMENTO: string;
+    PRONTUARIO: string;
 }
 
 
@@ -55,8 +70,19 @@ export default function MovimentacoesDashboard() {
             df_atendimentos: [],
             df_altas: [],
             operadoras: [],
+            motivos: {},
         },
     });
+    const colors = [
+        'rgba(35, 118, 241, 0.6)',
+        'rgba(241, 35, 131, 0.6)',
+        'rgba(35, 241, 97, 0.6)',
+        'rgba(241, 196, 35, 0.6)',
+        'rgba(153, 102, 255, 0.6)',
+        'rgba(255, 159, 64, 0.6)',
+        'rgba(255, 99, 132, 0.6)',
+        'rgba(54, 162, 235, 0.6)',
+    ];
 
     return (
         <div className="dashboard">
@@ -95,6 +121,17 @@ export default function MovimentacoesDashboard() {
                         text="Entradas"
                         value={DispositivosData.entradas.toString()}
                     />
+                    {
+                        DispositivosData.motivos && Object.keys(DispositivosData.motivos).map((key) => (
+                            <AtendimentosInfoShower
+                                key={key}
+                                text={key}
+                                value={DispositivosData.motivos[key].length.toString()}
+                                style={{ backgroundColor: colors[Object.keys(DispositivosData.motivos).indexOf(key) % colors.length] }}
+                                atendimentos={DispositivosData.motivos[key]}
+                            />
+                        ))
+                    }
                 </div>
             </div>
             
@@ -108,16 +145,6 @@ export default function MovimentacoesDashboard() {
                             [
                                 // para cada chave em df_altas, crie um dataset com uma cor diferente
                                 ...Array.from(new Set(DispositivosData.df_altas.flatMap(df => Object.keys(df.motivos)))).map((key, index) => {
-                                    const colors = [
-                                        'rgba(35, 118, 241, 0.6)',
-                                        'rgba(241, 35, 131, 0.6)',
-                                        'rgba(35, 241, 97, 0.6)',
-                                        'rgba(241, 196, 35, 0.6)',
-                                        'rgba(153, 102, 255, 0.6)',
-                                        'rgba(255, 159, 64, 0.6)',
-                                        'rgba(255, 99, 132, 0.6)',
-                                        'rgba(54, 162, 235, 0.6)',
-                                    ];
                                     return {
                                         label: key,
                                         data: DispositivosData.df_altas.map((df) => df.motivos[key] || 0),

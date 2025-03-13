@@ -4,13 +4,14 @@ interface InfoCellCompoentProps {
     value: string;
     entradas?: string[];
     saidas?: string[];
+    className?: string;
 }
 
 const InfoCellCompoent = (props: InfoCellCompoentProps) => {
     const { value, entradas, saidas } = props;
 
     return (
-        <>
+        <td className={props.className} style={{textAlign: 'center'}}>
             <CustomModal 
                 opener={<>{value}</>}
             >
@@ -29,7 +30,7 @@ const InfoCellCompoent = (props: InfoCellCompoentProps) => {
                     </ul>
                 </div>
             </CustomModal>     
-        </>
+        </td>
     );
 }
 

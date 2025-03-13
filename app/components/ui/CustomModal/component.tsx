@@ -7,7 +7,7 @@ import './styles.css'; // Certifique-se de criar um arquivo CSS para estilizar o
 interface CustomModalProps {
     size?: 'small' | 'medium' | 'large';
     children: React.ReactNode;
-    opener: React.ReactNode;
+    opener: React.ReactElement<any>; // Agora o opener é um ReactElement que aceita qualquer props
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({ size = 'medium', children, opener }) => {
@@ -49,11 +49,16 @@ const CustomModal: React.FC<CustomModalProps> = ({ size = 'medium', children, op
         return null;
     }
 
+    // Clonar o opener e adicionar o evento onClick e adicionar ao style para o cursor pointer
+    const openerWithClick = React.cloneElement(opener, {
+        onClick: handleOpen,
+        style: { ...opener.props.style, cursor: 'pointer' },
+    });
+
     return (
         <>
-            <div onClick={handleOpen} style={{ cursor: 'pointer', width: '100%', padding: '0', margin: '0', border: 'none', background: 'none' }}>
-                {opener}
-            </div>
+            {/* Renderizar o opener com o evento de clique adicionado */}
+            {openerWithClick}
 
             {isOpen &&
                 ReactDOM.createPortal(

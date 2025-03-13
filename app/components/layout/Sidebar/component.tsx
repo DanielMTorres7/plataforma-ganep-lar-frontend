@@ -3,6 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { FaHome, FaChartLine, FaMap, FaTh, FaMoneyBillAlt } from 'react-icons/fa'; // Exemplo de ícones
 import './styles.css';
 
+interface MenuItem {
+  label: string;
+  path?: string;
+  icon: React.ReactNode;
+  action?: () => void;
+}
+
+
 export default function Sidebar() {
   const [isMinimized, setIsMinimized] = useState(true);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
@@ -13,18 +21,16 @@ export default function Sidebar() {
   };
   
   // se estiver abertop deve adicionar uma margen a esquerda no body
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (isMinimized) {
-        document.body.style.marginLeft = '60px';
-      } else {
-        document.body.style.marginLeft = '250px';
-      }
-    }
-  }, [isMinimized]);
-
   const toggleMenu = (menu: string) => {
     setExpandedMenu(expandedMenu === menu ? null : menu);
+  };
+
+  const logout = () => {
+    // Faz o logout
+    // Redireciona para a tela de login
+    if (typeof window !== "undefined") {
+      window.location.href = '/login';
+    }
   };
 
   const redirect = (path: string) => {
@@ -35,7 +41,7 @@ export default function Sidebar() {
   };
 
   // Dados do menu
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       label: 'Home',
       path: '/',
@@ -61,6 +67,16 @@ export default function Sidebar() {
       path: '/paineis',
       icon: <FaTh />,
     },
+    {
+      label: 'DataSets',
+      path: '/datasets',
+      icon: <FaTh />,
+    },
+    // {
+    //   label: 'Sair',
+    //   icon: <FaHome />,
+    //   action: logout,
+    // }
   ];
 
   // Verifica se o item do menu está ativo (correspondente à URL atual)
@@ -70,6 +86,7 @@ export default function Sidebar() {
 
   return (
     <div className={`sidebar ${isMinimized ? 'minimized' : ''}`}>
+      <span className='borda'></span>
       <button className="toggle-btn" onClick={toggleSidebar}>
         {isMinimized ? '=' : 'x'}
       </button>
@@ -86,11 +103,12 @@ export default function Sidebar() {
                 {!isMinimized && <span className="label">{item.label}</span>}
               </button>
             ) : (
-              <button onClick={() => toggleMenu(item.label!)}>
+              <button onClick={item.action!}>
                 <span className="icon">{item.icon}</span>
                 {!isMinimized && <span className="label">{item.label}</span>}
               </button>
-            )}
+            )
+            }
           </div>
         ))}
       </div>

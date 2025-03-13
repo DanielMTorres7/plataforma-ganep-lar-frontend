@@ -33,9 +33,35 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({ value, onChange, place
       configs={
         {
           shortcuts: {
-            currentMonth: "Mês atual",
-            pastMonth: "Mês anterior",
-            thisYear: {
+            mesAtual: {
+              text: "Mês atual",
+              period: {
+                  start: (new Date(new Date().getFullYear(), new Date().getMonth(), 1)),
+                  end: new Date()
+              }
+            },
+            mesAnterior: {
+              text: "Mês passado",
+              period: {
+                  start: (new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)),
+                  end: (new Date(new Date().getFullYear(), new Date().getMonth(), 0))
+              }
+            },
+            last3months: {
+              text: "Últimos 3 meses",
+              period: {
+                  start: (new Date(new Date().getFullYear(), new Date().getMonth() - 2, 1)),
+                  end: new Date()
+              }
+            },
+            last12Months: {
+              text: "Últimos 12 meses",
+              period: {
+                  start: (new Date(new Date().getFullYear() - 1, new Date().getMonth(), 1)),
+                  end: new Date()
+              }
+            },
+            anoAtual: {
               text: "Este ano",
               period: {
                   start: (new Date(new Date().getFullYear(), 0, 1)),
@@ -49,14 +75,6 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({ value, onChange, place
                   end: (new Date(new Date().getFullYear() - 1, 11, 31))
               }
             },
-            last12Months: {
-              text: "Últimos 12 meses",
-              period: {
-                  start: (new Date(new Date().getFullYear() - 1, new Date().getMonth(), 1)),
-                  end: new Date()
-              }
-            },
-
         },
         }
       }

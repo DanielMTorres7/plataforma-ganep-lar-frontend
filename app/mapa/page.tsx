@@ -12,7 +12,6 @@ export default function Mapa() {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <PrimaryButton text="Produtos Convênio" onClick={handleLPP}/>
         </div>
     )
 }

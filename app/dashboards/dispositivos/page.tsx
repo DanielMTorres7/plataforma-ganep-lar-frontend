@@ -11,6 +11,7 @@ import InfoShower from "../components/InfoShower/component";
 import { DispositivosData } from "./interfaces";
 import useFetchData from '@/app/hooks/useFetchData';
 import { useDateRange } from "@/app/hooks/useDateRange";
+import DispositivosInfoShower from './components/DispositivosInfoShower/component';
 
 export default function LPPDashboard() {
     const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
@@ -24,10 +25,12 @@ export default function LPPDashboard() {
         }, 
         defaultData: {
             atendimentos: 0, 
-            cvd_cva: 0,
-            gtt_sne: 0,
-            tqt: 0,
-            picc: 0,
+            cvd: [],
+            cva: [],
+            gtt: [],
+            sne: [],
+            tqt: [],
+            picc: [],
             df_dispositivos: [],
             operadoras: [],
         },
@@ -56,10 +59,13 @@ export default function LPPDashboard() {
                     />
                 </div>
                 <div className="values">
-                    <InfoShower text="CVD & CVA" value={DispositivosData.cvd_cva} />
-                    <InfoShower text="GTT & SNE" value={DispositivosData.gtt_sne} />
-                    <InfoShower text="TQT" value={DispositivosData.tqt} />
-                    <InfoShower text="PICC" value={DispositivosData.picc} />
+                    <DispositivosInfoShower text="CVD" value={DispositivosData.cvd.length} atendimentos={DispositivosData.cvd} />
+                    <DispositivosInfoShower text="CVA" value={DispositivosData.cva.length} atendimentos={DispositivosData.cva} />
+                    <DispositivosInfoShower text="GTT" value={DispositivosData.gtt.length} atendimentos={DispositivosData.gtt} />
+                    <DispositivosInfoShower text="SNE" value={DispositivosData.sne.length} atendimentos={DispositivosData.sne} />
+                    <DispositivosInfoShower text="TQT" value={DispositivosData.tqt.length} atendimentos={DispositivosData.tqt} />
+                    <DispositivosInfoShower text="PICC" value={DispositivosData.picc.length} atendimentos={DispositivosData.picc} />
+                    
                 </div>
             </div>
 

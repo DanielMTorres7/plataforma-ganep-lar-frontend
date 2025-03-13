@@ -8,7 +8,7 @@ interface FetchDataOptions<T> {
 }
 
 const useFetchData = <T,>({ endpoint, body, defaultData , preFilter}: FetchDataOptions<T>) => {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState<T>(defaultData as T);
 
     // Memoiza o body para evitar recriação desnecessária
@@ -43,6 +43,7 @@ const useFetchData = <T,>({ endpoint, body, defaultData , preFilter}: FetchDataO
 
     useEffect(() => {
         if (!memoizedBody) return; // Não faz fetch se o body for undefined
+        if (loading) return; // Não faz fetch se já estiver carregando
         setLoading(true);
         fetchProtectedData();
     }, [fetchProtectedData, memoizedBody]); // Dependências do useEffect
