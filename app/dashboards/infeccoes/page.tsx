@@ -9,10 +9,10 @@ import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
 import BarChart from "@/app/components/ui/BarChart/component";
-import LastInfeccoesComponent from "./components/LastInfeccoesTable";
 import useFetchData from '@/app/hooks/useFetchData';
 import InfoShower from "../components/InfoShower/component";
 import { useDateRange } from "@/app/hooks/useDateRange";
+import CustomTableComponent from "@/app/components/ui/CustomTable/component";
 
 interface KeyValue {
     label: string;
@@ -165,9 +165,36 @@ export default function MovimentacoesDashboard() {
                         />
                     </div>
                 <div className="dashboard__content__table">
-                    <LastInfeccoesComponent
-                        key={'last_infeccoes'}
-                        pacientes={InfeccoesData.table_last_infeccoes}
+                    <CustomTableComponent
+                        style={{ maxHeight: '300px' }}
+                        data={InfeccoesData.table_last_infeccoes}
+                        columns={
+                            [
+                                {
+                                    header: 'Paciente',
+                                    accessorKey: 'NOME_PACIENTE',
+                                    cell: info => <>{info.getValue() as string}</>,
+                                },
+                                {
+                                    header: 'Data Ocorrência',
+                                    accessorKey: 'DATA_OCORRENCIA',
+                                    cell: info => <span>{new Date(info.getValue() as string).toLocaleDateString()}</span>,
+                                    sortingFn: (a, b) => {
+                                        return new Date(a.original.DATA_OCORRENCIA).getTime() - new Date(b.original.DATA_OCORRENCIA).getTime();
+                                    },
+                                },
+                                {
+                                    header: 'Tipo Infeccao',
+                                    accessorKey: 'TIPO_INFECCAO',
+                                    cell: info => <span>{info.getValue() as string}</span>,
+                                },
+                                {
+                                    header: 'Operadora',
+                                    accessorKey: 'OPERADORA',
+                                    cell: info => <span>{info.getValue() as string}</span>,
+                                },
+                            ]
+                        }
                     />
                 </div>
             </div>

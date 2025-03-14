@@ -4,16 +4,9 @@ import '@/app/components/css/table.css';
 import useFetchData from '@/app/hooks/useFetchData';
 import InfoShower from '../components/InfoShower/component';
 import SingleGauge from '@/app/components/ui/DoughnutChart/component';
-
-interface GestaoRiscoData {
-    n_atendimentos: number;
-    n_risco_nutri: number;
-    n_ID: number;
-    n_AD: number;
-    n_gtt: number;
-    n_sne: number;
-    n_diabetes: number;
-}
+import CustomModal from '@/app/components/ui/CustomModal/component';
+import AtendimentosInfoShower from './components/AtendimentosInfoShower/component';
+import { GestaoRiscoData } from './interfaces/gestaoRisco';
 
 
 export default function LPPDashboard() {
@@ -22,12 +15,12 @@ export default function LPPDashboard() {
         body: {}, 
         defaultData: {
             n_atendimentos: 0, 
-            n_risco_nutri: 0,
-            n_ID: 0,
-            n_AD: 0,
-            n_gtt: 0,
-            n_sne: 0,
-            n_diabetes: 0,
+            n_risco_nutri: [],
+            n_ID: [],
+            n_AD: [],
+            n_gtt: [],
+            n_sne: [],
+            n_diabetes: [],
         },
     });
 
@@ -39,50 +32,50 @@ export default function LPPDashboard() {
                 style={{ width: '100%'}}
             />
             <div>
-                <SingleGauge
+                <AtendimentosInfoShower
                     label={'Risco Nutri'}
                     title="Risco Nutri"
-                    value={GestaoRiscoData.n_risco_nutri}
+                    atendimentos={GestaoRiscoData.n_risco_nutri}
                     max={GestaoRiscoData.n_atendimentos}
                 />
             </div>
             <div>
-                <SingleGauge
+                <AtendimentosInfoShower
                     label={'Diabetes'}
                     title="Diabetes"
-                    value={GestaoRiscoData.n_diabetes}
+                    atendimentos={GestaoRiscoData.n_diabetes}
                     max={GestaoRiscoData.n_atendimentos}
                 />
             </div>
             <div>
-                <SingleGauge
+                <AtendimentosInfoShower
+                    atendimentos={GestaoRiscoData.n_AD}
                     label={'AD'}
                     title="AD"
-                    value={GestaoRiscoData.n_AD}
                     max={GestaoRiscoData.n_atendimentos}
                 />
             </div>
             <div>
-                <SingleGauge
+                <AtendimentosInfoShower
                     label={'ID'}
                     title="ID"
-                    value={GestaoRiscoData.n_ID}
+                    atendimentos={GestaoRiscoData.n_ID}
                     max={GestaoRiscoData.n_atendimentos}
                 />
             </div>
             <div>
-                <SingleGauge
+                <AtendimentosInfoShower
                     label={'GTT'}
                     title="GTT"
-                    value={GestaoRiscoData.n_gtt}
+                    atendimentos={GestaoRiscoData.n_gtt}
                     max={GestaoRiscoData.n_atendimentos}
                 />
             </div>
             <div>
-                <SingleGauge
+                <AtendimentosInfoShower
                     label={'SNE'}
                     title="SNE"
-                    value={GestaoRiscoData.n_sne}
+                    atendimentos={GestaoRiscoData.n_sne}
                     max={GestaoRiscoData.n_atendimentos}
                 />
             </div>

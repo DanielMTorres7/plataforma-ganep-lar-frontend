@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import '../styles.css';
 import './styles.css';
 import '@/app/components/css/table.css';
-import LppTableComponent from "./components/LastLppTable/LppTable";
 import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
@@ -12,6 +11,7 @@ import BarChart from "@/app/components/ui/BarChart/component";
 import InfoShower from "../components/InfoShower/component";
 import useFetchData from '@/app/hooks/useFetchData';
 import { useDateRange } from "@/app/hooks/useDateRange";
+import CustomTableComponent from "@/app/components/ui/CustomTable/component";
 interface LppTable {
     PACIENTE: string;
     ATENDIMENTO: string;
@@ -150,7 +150,32 @@ export default function LPPDashboard() {
                 </div>
 
                 <div className="dashboard__content__table">
-                    <LppTableComponent pacientes={LppData.lpp_table}/>
+                    <CustomTableComponent
+                        style={{ maxHeight: '300px' }}
+                        data={LppData.lpp_table}
+                        columns={
+                            [
+                                {
+                                    header: 'Paciente',
+                                    accessorKey: 'PACIENTE',
+                                    cell: info => <span>{info.getValue() as string}</span>,
+                                },
+                                {
+                                    header: 'Data Ocorrência',
+                                    accessorKey: 'DATA_INICIO',
+                                    cell: info => <span>{new Date(info.getValue() as string).toLocaleDateString()}</span>,
+                                    sortingFn: (a, b) => {
+                                        return new Date(a.original.DATA_INICIO).getTime() - new Date(b.original.DATA_INICIO).getTime();
+                                    },
+                                },
+                                {
+                                    header: 'Operadora',
+                                    accessorKey: 'OPERADORA',
+                                    cell: info => <span>{info.getValue() as string}</span>,
+                                },
+                            ]
+                        }
+                    />
                 </div>
             </div>
         </div>

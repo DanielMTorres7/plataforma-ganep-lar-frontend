@@ -11,10 +11,10 @@ const InfoCellCompoent = (props: InfoCellCompoentProps) => {
     const { value, entradas, saidas } = props;
 
     return (
-        <td className={props.className} key={value}>
+        <>
             <CustomModal 
                 opener={
-                    <span>{value}</span>
+                    <span className={props.className} key={value}>{value}</span>
                 }
             >
                 <div>
@@ -32,7 +32,7 @@ const InfoCellCompoent = (props: InfoCellCompoentProps) => {
                     </ul>
                 </div>
             </CustomModal>     
-        </td>
+        </>
     );
 }
 

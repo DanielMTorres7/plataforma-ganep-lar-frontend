@@ -6,9 +6,9 @@ import { ColumnDef, flexRender, getCoreRowModel, getFilteredRowModel, getSortedR
 import './styles.css';
 import InfoCellCompoent from '../components/InfoCellCompoent';
 import useFetchData from '@/app/hooks/useFetchData';
-import ProdutosConvenioTable from './components/ProdutosConvenioTable/component';
 import { useDateRange } from '@/app/hooks/useDateRange';
 import DatePickerComponent from '@/app/components/ui/DatePicker/component';
+import CustomTableComponent from '@/app/components/ui/CustomTable/component';
 
 interface ProdutosConvenio {
     operadora: string; 
@@ -29,6 +29,7 @@ interface resp {
 
 export default function OrcamentosPage() {
     const [tableData, setTableData] = useState<any[]>([]); // Estado para tableData
+    const dias = tableData[0] && Object.keys(tableData[0]).filter(key => !['operadora', 'produto', 'media'].includes(key)) || [];
     const { startDate, endDate, setStartDate, setEndDate } = useDateRange({
         // mes atual
         config_startDate: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), 2)),
@@ -92,7 +93,59 @@ export default function OrcamentosPage() {
                     }}
                 />
             </div>
-            <ProdutosConvenioTable tableData={tableData} />
+            <CustomTableComponent
+                style={{ height: '700px' }}
+                columns={
+                    [
+                        {
+                            header: 'Operadora',
+                            accessorKey: 'operadora',
+                            enableSorting: true,
+                        },
+                        {
+                            header: 'Produto',
+                            accessorKey: 'produto',
+                            enableSorting: true,
+                        },
+                        ...dias.map((dia:any) => ({
+                            header: dia,
+                            accessorKey: dia,
+                            enableSorting: true,
+                            cell: (info: any) => {
+                                const index = info.row.index;
+                                const cellData = (tableData[index] as any)[info.column.id] as Diario;
+                                const entradas = cellData.entradas || [];
+                                const saidas = cellData.saidas || [];
+                                let className = (entradas.length > 0 ? 'greater' : saidas.length > 0 ? 'lesser' : '') + ' td-number';
+                                return (
+                                    entradas.length > 0 || saidas.length > 0 ?
+                                        <InfoCellCompoent
+                                            value={cellData.total.toString()}
+                                            entradas={cellData.entradas}
+                                            saidas={cellData.saidas}
+                                            className={className}
+                                        />
+                                    :
+                                    <span className={className}>{cellData.total}</span>
+                                );
+                            },
+                            sortingFn: (a: any, b: any) => {
+                                const index = dias.indexOf(dia) + 2;
+                                const a_diario = a.original.diario[index] || { total: 0 };
+                                const b_diario = b.original.diario[index] || { total: 0 };
+                                return a_diario.total - b_diario.total;
+                            },
+                        })),
+                        {
+                            header: 'Média',
+                            accessorKey: 'media',
+                            enableSorting: true,
+                        },
+                    ]
+                }
+                data={tableData}
+            />
         </div>
     );
 }
+

@@ -9,10 +9,10 @@ import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
 import BarChart from "@/app/components/ui/BarChart/component";
-import HospTableComponent from "./components/LastHospTable/HospTable";
 import InfoShower from "../components/InfoShower/component";
 import useFetchData from '@/app/hooks/useFetchData';
 import { useDateRange } from "@/app/hooks/useDateRange";
+import CustomTableComponent from "@/app/components/ui/CustomTable/component";
 
 interface hospitalizacoes {
     atendimentos: number;
@@ -161,9 +161,30 @@ export default function HospitalizacoesDashboard() {
                     />
                 </div>
                 <div className="dashboard__content__chart">
-                    <HospTableComponent
-                        pacientes={hospitalizacoesData.table_ultimas_hospitalizacoes}
-                        key={'ultimas_hospitalizacoes'}
+                    <CustomTableComponent
+                        style={{ maxHeight: '300px' }}
+                        data={hospitalizacoesData.table_ultimas_hospitalizacoes}
+                        columns={[
+                            {
+                                header: 'Paciente',
+                                accessorKey: 'paciente',
+                                cell: info => <span>{info.getValue() as string}</span>,
+                            },
+                            {
+                                header: 'Data Ocorrência',
+                                accessorKey: 'data',
+                                cell: info => <span>{new Date(info.getValue() as string).toLocaleDateString()}</span>,
+                                sortingFn: (a, b) => {
+                                    return new Date(a.original.data).getTime() - new Date(b.original.data).getTime();
+                                },
+                            },
+                            {
+                                header: 'Operadora',
+                                accessorKey: 'operadora',
+                                cell: info => <span>{info.getValue() as string}</span>,
+                            },
+                        ]}
+                        key={'internacoes'}
                     />
                 </div>
             </div>

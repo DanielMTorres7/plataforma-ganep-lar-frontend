@@ -24,7 +24,7 @@ export default function RootLayout({
             </li>
         </ul>
       </NavBar>
-      <div style={{width: '100%', borderTopLeftRadius: '20px', zIndex:100000}}>
+      <div className="content-body">
           {children}
       </div>
     </div>

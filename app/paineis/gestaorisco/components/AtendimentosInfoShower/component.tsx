@@ -1,30 +1,32 @@
-import React from 'react';
-import './styles.css';
-import CustomModal from '@/app/components/ui/CustomModal/component';
-import { atendimento } from '../../interfaces';
-import CustomTableComponent from '@/app/components/ui/CustomTable/component';
+import CustomModal from "@/app/components/ui/CustomModal/component";
+import SingleGauge from "@/app/components/ui/DoughnutChart/component";
+import { atendimento } from "../../interfaces/atendimento";
+import CustomTableComponent from "@/app/components/ui/CustomTable/component";
 
-interface InfoShowerProps {
-    text: string | number | React.ReactNode;
-    value: string | number | React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
+
+interface AtendimentosInfoShowerProps {
     atendimentos: atendimento[];
+    label: string;
+    title: string;
+    max: number;
 }
 
-const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, className, style, atendimentos }) => {
-    return (
 
+export default function AtendimentosInfoShower({ atendimentos, label, title, max }: AtendimentosInfoShowerProps) {
+    return (
         <CustomModal
-            size="large"
             opener={
-                <div className={"info-shower " + className} style={style}>
-                    <div className="info-shower-value">{value}</div>
-                    <div className="info-shower-text">{text}</div>
+                <div>
+                    <SingleGauge
+                        label={label}
+                        title={title}
+                        value={atendimentos.length}
+                        max={max}
+                    />
                 </div>
             }
+            size="large"
         >
-            <h1>{text}</h1>
             <CustomTableComponent
                 style={{ maxHeight: '500px' }}
                 columns={
@@ -32,21 +34,16 @@ const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                         {
                             header: 'Prontuário',
                             accessorKey: 'PRONTUARIO',
-                            cell: info => <span>{info.getValue() as number}</span>,
+                            cell: info => <>{info.getValue() as number}</>,
                         },
                         {
-                            header: 'Atd.',
+                            header: 'Atendimento',
                             accessorKey: 'ATENDIMENTO',
                             cell: info => <span>{info.getValue() as number}</span>,
                         },
                         {
                             header: 'Paciente',
                             accessorKey: 'PACIENTE',
-                            cell: info => <span>{info.getValue() as string}</span>,
-                        },
-                        {
-                            header: 'Operadora',
-                            accessorKey: 'OPERADORA',
                             cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
@@ -58,17 +55,19 @@ const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                             },
                         },
                         {
-                            header: 'Status',
-                            accessorKey: 'STATUS',
+                            header: 'Operadora',
+                            accessorKey: 'OPERADORA',
                             cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
-                            header: 'Data Alta',
-                            accessorKey: 'ALTA',
-                            cell: info => <span>{info.getValue() && new Date(info.getValue() as string).toLocaleDateString()}</span>,
-                            sortingFn: (a, b) => {
-                                return new Date(a.original.ALTA).getTime() - new Date(b.original.ALTA).getTime();
-                            },
+                            header: 'Grupo',
+                            accessorKey: 'GRUPO',
+                            cell: info => <span>{info.getValue() as string}</span>,
+                        },
+                        {
+                            header: 'Status',
+                            accessorKey: 'STATUS',
+                            cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
                             header: 'CVA',
@@ -81,6 +80,11 @@ const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                             cell: info => <span>{info.getValue() as boolean ? 'Sim' : 'Não'}</span>,
                         },
                         {
+                            header: 'Risco Nutri',
+                            accessorKey: 'RISCO_NUTRI',
+                            cell: info => <span>{info.getValue() as boolean ? 'Sim' : 'Não'}</span>,
+                        },
+                        {
                             header: 'GTT',
                             accessorKey: 'GTT',
                             cell: info => <span>{info.getValue() as boolean ? 'Sim' : 'Não'}</span>,
@@ -88,27 +92,17 @@ const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                         {
                             header: 'SNE',
                             accessorKey: 'SNE',
-                            cell: info => <span>{info.getValue() as boolean ? 'Sim' : 'Não'}</span>,
+                            cell: info => <>{info.getValue() as boolean ? 'Sim' : 'Não'}</>,
                         },
                         {
-                            header: 'TQT',
-                            accessorKey: 'TQT',
-                            cell: info => <span>{info.getValue() as boolean ? 'Sim' : 'Não'}</span>,
+                            header: 'Diabetes',
+                            accessorKey: 'DIABETES',
+                            cell: info => <>{info.getValue() as boolean ? 'Sim' : 'Não'}</>,
                         },
-                        {
-                            header: 'PICC',
-                            accessorKey: 'PICC',
-                            cell: info => <span>{info.getValue() as boolean ? 'Sim' : 'Não'}</span>,
-                        },
-                        
                     ]
-                }    
+                }
                 data={atendimentos}
             />
         </CustomModal>
-        
-        
     );
-};
-
-export default DispositivosInfoShower;
+}

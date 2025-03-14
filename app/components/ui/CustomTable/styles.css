@@ -1,11 +1,9 @@
-/* styles.css
+/* styles.css */
 .table_holder {
     overflow-x: auto;
     position: relative;
     width: 100%;
     margin: 0 auto;
-    z-index: 1!important;
-    max-height: 400px;
 }
 
 .custom-table {
@@ -13,7 +11,6 @@
     border-collapse: collapse;
     color: #3d4e72;
     font-size: 12px;
-    z-index: 1!important;
     height: 100%;
     overflow: auto;
 }
@@ -35,7 +32,7 @@
     top: 0;
 }
 
-.custom-table td {
+.custom-table td{
     white-space: nowrap;
     font-family: Arial, sans-serif;
     font-size: 12px;
@@ -43,22 +40,42 @@
     border-style: solid;
     border-width: 1px 0;
     text-align: left;
-    padding: 0;
+    padding: 1px;
 }
 .custom-table td span{
-    padding: 0;
+    padding: 0 12px;
     display: block;
-    text-align: center;
 }
+
+.custom-table .td-number,
+.custom-table .td-number span {
+    text-align: center!important;
+}
+
+.custom-table .td-string,
+.custom-table .td-string span {
+    text-align: left!important;
+}
+
+.custom-table .td-date,
+.custom-table .td-date span {
+    text-align: center!important;
+}
+
+.custom-table .td-boolean,
+.custom-table .td-boolean span {
+    text-align: center!important;
+}
+
 .custom-table tr {
     height: 20px;
 }
 
-.custom-table tr:nth-child(even) {
-    background-color: rgb(231, 237, 245);
+.custom-table tr:nth-child(even) td{
+    background-color: rgba(83, 152, 255, 0.1)!important;
 }
 
-.custom-table tr:nth-child(odd) {
-    background-color: #fff;
+.custom-table tr:nth-child(odd) td{
+    background-color: #fff!important;
 }
- */
+

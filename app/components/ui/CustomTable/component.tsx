@@ -1,65 +1,34 @@
-'use client';
+import { useState } from "react";
+import { ColumnFiltersState, SortingState, ColumnDef, useReactTable, getCoreRowModel, getFilteredRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
+import './styles.css';
 
-import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
-
-import '@/app/components/css/table.css';
-
-interface resposta {
-    PACIENTE: string;
-    ATENDIMENTO: string;
-    OPERADORA: string;
-    DATA_INICIO: string;
+interface CustomTableProps {
+    columns: ColumnDef<any, any>[]; // ColumnDefResolved<any, any>[];
+    data: any[];
+    className?: string;
+    style?: React.CSSProperties;
 }
 
-interface LppProps {
-    pacientes: resposta[];
-}
-
-export default function LppTableComponent({ pacientes }: LppProps) {
+export default function CustomTableComponent({ data, columns, className, style }: CustomTableProps) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-    const columns: ColumnDef<resposta>[] = [
-            {
-                header: 'Paciente',
-                accessorKey: 'PACIENTE',
-                cell: info => <span>{info.getValue() as string}</span>,
-            },
-            {
-                header: 'Data Ocorrência',
-                accessorKey: 'DATA_INICIO',
-                cell: info => <span>{new Date(info.getValue() as string).toLocaleDateString()}</span>,
-                sortingFn: (a, b) => {
-                    return new Date(a.original.DATA_INICIO).getTime() - new Date(b.original.DATA_INICIO).getTime();
-                },
-            },
-            {
-                header: 'Operadora',
-                accessorKey: 'OPERADORA',
-                cell: info => <span>{info.getValue() as string}</span>,
-            },
-        ];
-        const table = useReactTable({
-            data: pacientes,
-            columns,
-            state: {
-                sorting,
-                columnFilters,
-            },
-            onSortingChange: setSorting,
-            onColumnFiltersChange: setColumnFilters,
-            getCoreRowModel: getCoreRowModel(),
-            getFilteredRowModel: getFilteredRowModel(),
-            getSortedRowModel: getSortedRowModel(),
-        });
-    
-    if (table.getRowModel().rows.length === 0) {
-        return <div>Nenhum dado encontrado</div>;
-    }
+    const table = useReactTable({
+        data: data,
+        columns,
+        state: {
+            sorting,
+            columnFilters,
+        },
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+    });
 
     return (
-        <>
+        <div className={'table_holder ' + className} style={style}>
             <table className='custom-table'>
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
@@ -104,7 +73,7 @@ export default function LppTableComponent({ pacientes }: LppProps) {
                     {table.getRowModel().rows.map(row => (
                         <tr key={row.id}>
                             {row.getVisibleCells().map(cell => (
-                                <td key={cell.id} className='td_cell'>
+                                <td key={cell.id} className={`td_cell td-${typeof cell.getValue()}`} style={{ backgroundColor: typeof cell.getValue() === 'boolean' && cell.getValue() ? 'lightgreen' : 'white' }}>
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                 </td>
                             ))}
@@ -112,6 +81,6 @@ export default function LppTableComponent({ pacientes }: LppProps) {
                     ))}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }
