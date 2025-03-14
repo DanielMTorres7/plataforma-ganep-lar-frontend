@@ -22,7 +22,6 @@ interface ProdutosConvenio {
 }
 
 export default function OrcamentosPage() {
-    const [tableData, setTableData] = useState<any[]>([]); // Estado para tableData
     const { startDate, endDate, setStartDate, setEndDate } = useDateRange({
         // mes atual
         config_startDate: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), 2)),
@@ -52,37 +51,35 @@ export default function OrcamentosPage() {
                     }}
                 />
             </div>
-            {data ? (
-                <table className='custom-table'>
-                    <thead>
-                        <tr>
-                            {
-                                data[0] && Object.keys(data[0]).map((key, index) => (
-                                    <th key={index}>{key}</th>
-                                ))
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((row:any, index) => (
-                            <tr key={index}>
+            <div className='table_holder'>
+                {data ? (
+                    <table className='custom-table'>
+                        <thead>
+                            <tr>
                                 {
-                                    Object.keys(row).map((key:any, index) => (
-                                        <td key={index}>{row[key]}</td>
+                                    data[0] && Object.keys(data[0]).map((key, index) => (
+                                        <th key={index}>{key}</th>
                                     ))
                                 }
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            ) : (
-                <div>Nenhum dado encontrado</div>
-            )
-
-                    
-                    
-                    
-                    }
+                        </thead>
+                        <tbody>
+                            {data.map((row:any, index) => (
+                                <tr key={index}>
+                                    {
+                                        Object.keys(row).map((key:any, index) => (
+                                            <td key={index}>{row[key]}</td>
+                                        ))
+                                    }
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div>Nenhum dado encontrado</div>
+                )
+                }
+            </div>
             
         </div>
     );

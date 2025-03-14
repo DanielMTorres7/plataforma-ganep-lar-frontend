@@ -11,9 +11,11 @@ const InfoCellCompoent = (props: InfoCellCompoentProps) => {
     const { value, entradas, saidas } = props;
 
     return (
-        <td className={props.className} style={{textAlign: 'center'}}>
+        <td className={props.className} key={value}>
             <CustomModal 
-                opener={<>{value}</>}
+                opener={
+                    <span>{value}</span>
+                }
             >
                 <div>
                     <h2>Entradas</h2>
