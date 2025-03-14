@@ -37,7 +37,7 @@ export default function AtendimentosInfoShower({ atendimentos, label, title, max
                             cell: info => <>{info.getValue() as number}</>,
                         },
                         {
-                            header: 'Atendimento',
+                            header: 'Atd.',
                             accessorKey: 'ATENDIMENTO',
                             cell: info => <span>{info.getValue() as number}</span>,
                         },
@@ -62,11 +62,6 @@ export default function AtendimentosInfoShower({ atendimentos, label, title, max
                         {
                             header: 'Grupo',
                             accessorKey: 'GRUPO',
-                            cell: info => <span>{info.getValue() as string}</span>,
-                        },
-                        {
-                            header: 'Status',
-                            accessorKey: 'STATUS',
                             cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
