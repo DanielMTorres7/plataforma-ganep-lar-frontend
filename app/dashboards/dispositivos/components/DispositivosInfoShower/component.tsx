@@ -14,7 +14,6 @@ interface InfoShowerProps {
 
 const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, className, style, atendimentos }) => {
     return (
-
         <CustomModal
             size="large"
             opener={
@@ -32,22 +31,26 @@ const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                         {
                             header: 'Prontuário',
                             accessorKey: 'PRONTUARIO',
-                            cell: info => <span>{info.getValue() as number}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as number}</span>,
                         },
                         {
                             header: 'Atd.',
                             accessorKey: 'ATENDIMENTO',
-                            cell: info => <span>{info.getValue() as number}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as number}</span>,
                         },
                         {
                             header: 'Paciente',
                             accessorKey: 'PACIENTE',
-                            cell: info => <span>{info.getValue() as string}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
                             header: 'Operadora',
                             accessorKey: 'OPERADORA',
-                            cell: info => <span>{info.getValue() as string}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
                             header: 'Entrada',

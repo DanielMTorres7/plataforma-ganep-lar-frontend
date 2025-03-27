@@ -34,17 +34,20 @@ export default function AtendimentosInfoShower({ atendimentos, label, title, max
                         {
                             header: 'Prontuário',
                             accessorKey: 'PRONTUARIO',
-                            cell: info => <>{info.getValue() as number}</>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <>{info.getValue() as number}</>,
                         },
                         {
                             header: 'Atd.',
                             accessorKey: 'ATENDIMENTO',
-                            cell: info => <span>{info.getValue() as number}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as number}</span>,
                         },
                         {
                             header: 'Paciente',
                             accessorKey: 'PACIENTE',
-                            cell: info => <span>{info.getValue() as string}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
                             header: 'Entrada',
@@ -57,7 +60,8 @@ export default function AtendimentosInfoShower({ atendimentos, label, title, max
                         {
                             header: 'Operadora',
                             accessorKey: 'OPERADORA',
-                            cell: info => <span>{info.getValue() as string}</span>,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                         },
                         {
                             header: 'Grupo',
@@ -90,9 +94,18 @@ export default function AtendimentosInfoShower({ atendimentos, label, title, max
                             cell: info => <>{info.getValue() as boolean ? 'Sim' : 'Não'}</>,
                         },
                         {
+                            header: 'TQT',
+                            accessorKey: 'TQT',
+                            cell: info => <>{info.getValue() as boolean ? 'Sim' : 'Não'}</>,
+                        },
+                        {
                             header: 'Diabetes',
                             accessorKey: 'DIABETES',
                             cell: info => <>{info.getValue() as boolean ? 'Sim' : 'Não'}</>,
+                        },
+                        {
+                            header: 'Tipo de Infecção',
+                            accessorKey: 'TIPO_INFECCAO',
                         },
                     ]
                 }

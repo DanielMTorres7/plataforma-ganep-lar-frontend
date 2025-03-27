@@ -1,7 +1,7 @@
 'use client'; // Indica que este é um Client Component
 
 import { useState } from 'react';
-import { OrcamentoData, PlanilhaAtendimentos } from '../../../types/types';
+import { OrcamentoData, PlanilhaAtendimentos } from '../../types/types';
 import PlanilhaAtendimentosComponent from '../PlanilhasAtendimentos/PlanilhaAtendimentos';
 import './styles.css';
 

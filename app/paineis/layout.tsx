@@ -21,6 +21,7 @@ export default function RootLayout({
           <ul className="nav-links">
               <li>
                   <PrimaryButton text="Gestão de Risco" onClick={() => router.push('/paineis/gestaorisco')}/>
+                  <PrimaryButton text="Pendências" onClick={() => router.push('/paineis/pendencias')}/>
               </li>
           </ul>
         </NavBar>

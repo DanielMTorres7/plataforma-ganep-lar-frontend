@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import '../styles.css';
 import './styles.css';
-import '@/app/components/css/table.css';
+
 import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
@@ -118,6 +118,10 @@ export default function MovimentacoesDashboard() {
                                     borderColor: 'rgba(35, 118, 241, 0.6)',
                                     type: 'line',
                                     yAxisID: 'y1',
+                                    tension: 0.2,
+                                    pointStyle: 'circle',
+                                    pointRadius: 2,
+                                    fill:'start',
                                 },
                                 {
                                     label: 'Meta',
@@ -126,6 +130,9 @@ export default function MovimentacoesDashboard() {
                                     type: 'line',
                                     yAxisID: 'y1',
                                     borderDash: [5, 2],
+                                    tension: 0.2,
+                                    pointStyle: 'circle',
+                                    pointRadius: 2,
                                 }
                             ]
                         }
@@ -152,12 +159,18 @@ export default function MovimentacoesDashboard() {
                                     {
                                         label: 'Itus',
                                         data: (InfeccoesData.df_infeccoes && InfeccoesData.df_infeccoes.map((df) => df.itus))||[],
-                                        backgroundColor: 'rgba(35, 118, 241, 0.6)',
+                                        backgroundColor: 'rgba(35, 117, 241, 0.3)',
+                                        borderColor: 'rgba(35, 117, 241, 0.6)',
+                                        borderWidth: 2.5,
+                                        borderRadius: 10,
                                     },
                                     {
                                         label: 'Infeccoes',
                                         data: (InfeccoesData.df_infeccoes && InfeccoesData.df_infeccoes.map((df) => df.infeccoes))||[],
-                                        backgroundColor: 'rgba(241, 35, 131, 0.6)',
+                                        backgroundColor: 'rgba(241, 35, 131, 0.3)',
+                                        borderColor: 'rgba(241, 35, 131, 0.6)',
+                                        borderWidth: 2.5,
+                                        borderRadius: 10,
                                     },
                                 ]
                             }
@@ -173,7 +186,8 @@ export default function MovimentacoesDashboard() {
                                 {
                                     header: 'Paciente',
                                     accessorKey: 'NOME_PACIENTE',
-                                    cell: info => <>{info.getValue() as string}</>,
+                                    // cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <>{info.getValue() as string}</>,
                                 },
                                 {
                                     header: 'Data Ocorrência',
@@ -191,7 +205,8 @@ export default function MovimentacoesDashboard() {
                                 {
                                     header: 'Operadora',
                                     accessorKey: 'OPERADORA',
-                                    cell: info => <span>{info.getValue() as string}</span>,
+                                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                                 },
                             ]
                         }

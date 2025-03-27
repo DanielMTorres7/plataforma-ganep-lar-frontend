@@ -30,6 +30,8 @@
     height: 30px;
     position: sticky;
     top: 0;
+    min-width: 40px;
+    max-width: 300px;
 }
 
 .custom-table td{
@@ -72,7 +74,7 @@
 }
 
 .custom-table tr:nth-child(even) td{
-    background-color: rgba(83, 152, 255, 0.1)!important;
+    background-color: rgb(233, 242, 255)!important;
 }
 
 .custom-table tr:nth-child(odd) td{

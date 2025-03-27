@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import '../styles.css';
 import './styles.css';
-import '@/app/components/css/table.css';
 import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 import BarChart from "@/app/components/ui/BarChart/component";
@@ -78,7 +77,6 @@ export default function LPPDashboard() {
                             {
                                 label: 'TQT',
                                 data: (DispositivosData.df_dispositivos && DispositivosData.df_dispositivos.map((df) => df.tqt)) || [],
-                                borderColor: 'rgba(35, 118, 241, 0.6)',
                                 type: 'line',
                             },
                         ]}
@@ -94,13 +92,11 @@ export default function LPPDashboard() {
                             {
                                 label: 'GTT',
                                 data: (DispositivosData.df_dispositivos && DispositivosData.df_dispositivos.map((df) => df.gtt)) || [],
-                                borderColor: 'rgba(35, 118, 241, 0.6)',
                                 type: 'line',
                             },
                             {
                                 label: 'SNE',
                                 data: (DispositivosData.df_dispositivos && DispositivosData.df_dispositivos.map((df) => df.sne)) || [],
-                                borderColor: 'rgba(241, 35, 131, 0.6)',
                                 type: 'line',
                             },
                         ]}
@@ -116,13 +112,11 @@ export default function LPPDashboard() {
                             {
                                 label: 'CVD',
                                 data: (DispositivosData.df_dispositivos && DispositivosData.df_dispositivos.map((df) => df.cvd)) || [],
-                                borderColor: 'rgba(35, 118, 241, 0.6)',
                                 type: 'line',
                             },
                             {
                                 label: 'CVA',
                                 data: (DispositivosData.df_dispositivos && DispositivosData.df_dispositivos.map((df) => df.cva)) || [],
-                                borderColor: 'rgba(241, 35, 131, 0.6)',
                                 type: 'line',
                             },
                         ]}
@@ -138,7 +132,6 @@ export default function LPPDashboard() {
                             {
                                 label: 'PICC',
                                 data: (DispositivosData.df_dispositivos && DispositivosData.df_dispositivos.map((df) => df.picc)) || [],
-                                borderColor: 'rgba(35, 118, 241, 0.6)',
                                 type: 'line',
                             },
                         ]}

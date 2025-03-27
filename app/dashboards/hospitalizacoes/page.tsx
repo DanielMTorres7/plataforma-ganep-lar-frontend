@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import '../styles.css';
 import './styles.css';
-import '@/app/components/css/table.css';
+
 import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
@@ -103,40 +103,21 @@ export default function HospitalizacoesDashboard() {
                             {
                                 label: 'Atendimentos',
                                 data: hospitalizacoesData.df_internacoes.map((data) => data.atendimentos),
-                                backgroundColor: 'rgba(35, 118, 241, 0.6)',
-                                borderColor: 'rgba(35, 118, 241, 0.6)',
-                                borderWidth: 1,
                             },
                             {
                                 label: '%',
                                 data: hospitalizacoesData.df_internacoes.map((data) => data.percentual),
-                                backgroundColor: 'rgba(241, 35, 131, 0.6)',
-                                borderColor: 'rgba(241, 35, 131, 0.6)',
-                                borderWidth: 1,
                                 type: 'line',
                                 yAxisID: 'yAxis', // Associando ao eixo yAxis
                             },
                             {
                                 label: 'Meta',
                                 data: hospitalizacoesData.df_internacoes.map((data) => data.meta),
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1,
                                 type: 'line',
                                 yAxisID: 'yAxis', // Associando ao eixo yAxis
+                                borderDash: [5, 2],
                             }
                         ]}
-                        options={{
-                            scales: {
-                                yAxis: {
-                                    beginAtZero: true,
-                                    position: 'right', // Eixo y secundário à direita
-                                    grid: {
-                                        display: false,
-                                    },
-                                },
-                            },
-                        }}
                         labels={hospitalizacoesData.df_internacoes.map((data) => data.mes)}
                         key={'internacoes'}
                         title="Internações e Atendimentos"
@@ -149,15 +130,10 @@ export default function HospitalizacoesDashboard() {
                                 {
                                     label: 'Internações',
                                     data: hospitalizacoesData.df_internacoes.map((data) => data.internacoes),
-                                    backgroundColor: 'rgba(35, 118, 241, 0.6)',
-                                    borderColor: 'rgba(35, 118, 241, 0.6)',
-                                    borderWidth: 1,
                                 }
                             ]
                         }
                         labels={hospitalizacoesData.df_internacoes.map((data) => data.mes)}
-                        key={'internacoes'}
-                        title="Internações e Atendimentos"
                     />
                 </div>
                 <div className="dashboard__content__chart">
@@ -168,7 +144,8 @@ export default function HospitalizacoesDashboard() {
                             {
                                 header: 'Paciente',
                                 accessorKey: 'paciente',
-                                cell: info => <span>{info.getValue() as string}</span>,
+                                cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                                // cell: info => <span>{info.getValue() as string}</span>,
                             },
                             {
                                 header: 'Data Ocorrência',
@@ -181,7 +158,8 @@ export default function HospitalizacoesDashboard() {
                             {
                                 header: 'Operadora',
                                 accessorKey: 'operadora',
-                                cell: info => <span>{info.getValue() as string}</span>,
+                                cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                             },
                         ]}
                         key={'internacoes'}

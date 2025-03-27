@@ -19,6 +19,7 @@ body{
   position: relative;
   overflow-y: auto;
   height: 100vh;
+  /* background-color:rgb(9, 0, 15); */
 }
 
 .content-body{
@@ -28,4 +29,6 @@ body{
 :root{
   --color-primary: #7f1718;
   --color-secondary:rgb(146, 55, 56);
+  /* --color-primary:rgb(23, 68, 127);
+  --color-secondary:rgb(55, 105, 146); */
 }

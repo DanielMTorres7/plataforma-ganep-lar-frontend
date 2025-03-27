@@ -30,7 +30,8 @@ const AtendimentosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                     {
                         header: 'Paciente',
                         accessorKey: 'PACIENTE',
-                        cell: info => <span>{info.getValue() as string}</span>,
+                        cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                     },
                     {
                         header: 'Data Alta',
@@ -43,17 +44,20 @@ const AtendimentosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                     {
                         header: 'Operadora',
                         accessorKey: 'OPERADORA',
-                        cell: info => <span>{info.getValue() as string}</span>,
+                        cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                     },
                     {
                         header: 'Atendimento',
                         accessorKey: 'ATENDIMENTO',
-                        cell: info => <span>{info.getValue() as string}</span>,
+                        cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                     },
                     {
                         header: 'Prontuário',
                         accessorKey: 'PRONTUARIO',
-                        cell: info => <span>{info.getValue() as string}</span>,
+                        cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                     },
                 ]}
                 data={atendimentos}

@@ -26,7 +26,8 @@ const DatePickerComponent: React.FC<DatePickerProps> = ({ value, onChange, place
       i18n='pt-br'
       value={value}
       onChange={newValue => handleValueChange(newValue!)}
-      inputClassName="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      inputClassName="date_picker"
+      
       placeholder={placeholder || 'Selecione uma data'}
       displayFormat="DD/MM/YYYY"
       showShortcuts={true}

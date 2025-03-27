@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import '../styles.css';
 import './styles.css';
-import '@/app/components/css/table.css';
+
 import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
@@ -12,6 +12,7 @@ import InfoShower from "../components/InfoShower/component";
 import useFetchData from '@/app/hooks/useFetchData';
 import { useDateRange } from "@/app/hooks/useDateRange";
 import AtendimentosInfoShower from "./components/AtendimentosInfoShower/component";
+import { BiBorderRadius } from "react-icons/bi";
 
 interface KeyValue {
     label: string;
@@ -74,14 +75,13 @@ export default function MovimentacoesDashboard() {
         },
     });
     const colors = [
-        'rgba(35, 118, 241, 0.6)',
+        'rgba(35, 117, 241, 0.3)',
         'rgba(241, 35, 131, 0.6)',
-        'rgba(35, 241, 97, 0.6)',
-        'rgba(241, 196, 35, 0.6)',
-        'rgba(153, 102, 255, 0.6)',
-        'rgba(255, 159, 64, 0.6)',
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(192, 75, 192, 0.2)',
+        'rgba(192, 192, 75, 0.2)',
+        'rgba(192, 75, 75, 0.2)',
+        'rgba(75, 192, 75, 0.2)'
     ];
 
     return (
@@ -148,7 +148,6 @@ export default function MovimentacoesDashboard() {
                                     return {
                                         label: key,
                                         data: DispositivosData.df_altas.map((df) => df.motivos[key] || 0),
-                                        backgroundColor: colors[index % colors.length],
                                         stack: 'stack1',
                                     };
                                 }),
@@ -158,6 +157,9 @@ export default function MovimentacoesDashboard() {
                             scales: {
                                 y: {
                                     stacked: true,
+                                    grid: {
+                                        display: false,
+                                    },
                                 },
                             },
                         }}
@@ -174,35 +176,21 @@ export default function MovimentacoesDashboard() {
                                 {
                                     label: 'Atendimentos',
                                     data: (DispositivosData.df_atendimentos && DispositivosData.df_atendimentos.map((df) => df.atendimentos))||[],
-                                    backgroundColor: 'rgba(35, 118, 241, 0.6)',
                                 },
                                 {
                                     label: 'Altas',
                                     data: (DispositivosData.df_atendimentos && DispositivosData.df_atendimentos.map((df) => df.altas))||[],
-                                    borderColor: 'rgba(241, 35, 131, 0.6)',
                                     type: 'line',
-                                    yAxisID: 'y1',
+                                    yAxisID: 'yAxis',
                                 },
                                 {
                                     label: 'Entradas',
                                     data: (DispositivosData.df_atendimentos && DispositivosData.df_atendimentos.map((df) => df.entradas))||[],
-                                    borderColor: 'rgba(35, 241, 97, 0.6)',
                                     type: 'line',
-                                    yAxisID: 'y1',
+                                    yAxisID: 'yAxis',
                                 },
                             ]
                         }
-                        options={{
-                            scales: {
-                                y1: {
-                                    position: 'right',
-                                    beginAtZero: true,
-                                    grid: {
-                                        display: false,
-                                    },
-                                },
-                            },
-                        }}
                         title="Atendimentos, Altas e Entradas"
                     />
                 </div>

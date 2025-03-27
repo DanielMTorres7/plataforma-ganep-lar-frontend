@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import '@/app/components/css/table.css';
 import { ColumnDef, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable, SortingState, ColumnFiltersState } from "@tanstack/react-table";
 import './styles.css';
 import InfoCellCompoent from '../components/InfoCellCompoent';
@@ -101,6 +100,8 @@ export default function OrcamentosPage() {
                             header: 'Operadora',
                             accessorKey: 'operadora',
                             enableSorting: true,
+                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // 
                         },
                         {
                             header: 'Produto',
@@ -130,10 +131,10 @@ export default function OrcamentosPage() {
                                 );
                             },
                             sortingFn: (a: any, b: any) => {
-                                const index = dias.indexOf(dia) + 2;
-                                const a_diario = a.original.diario[index] || { total: 0 };
-                                const b_diario = b.original.diario[index] || { total: 0 };
-                                return a_diario.total - b_diario.total;
+                                const column = dia;
+                                const cellDataA = (tableData[a.index] as any)[column] as Diario;
+                                const cellDataB = (tableData[b.index] as any)[column] as Diario;
+                                return cellDataA.total - cellDataB.total;
                             },
                         })),
                         {

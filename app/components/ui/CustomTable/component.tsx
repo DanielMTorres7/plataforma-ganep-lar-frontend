@@ -34,7 +34,8 @@ export default function CustomTableComponent({ data, columns, className, style }
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (
-                                <th key={header.id} colSpan={header.colSpan} className='th_header'>
+                                // pegar o tipo da coluna e colocar como classe tr-<tipo>
+                                <th key={header.id} colSpan={header.colSpan} className={'th_header'}>
                                     {header.isPlaceholder ? null : (
                                         <div
                                             className={

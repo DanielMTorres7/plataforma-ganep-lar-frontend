@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import OrcamentosComponent from './components/HeaderOrcamentos/HeaderOrcamentos';
-import { OrcamentoData } from '../types/types';
+import { OrcamentoData } from './types/types';
 import './styles.css';
 import SearchOrcamentosComponent from './components/SearchOrcamento/SearchOrcamentos';
 import useFetchData from '@/app/hooks/useFetchData';

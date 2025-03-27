@@ -1,0 +1,26 @@
+.red_ball{
+    width: 24px;
+    height: 24px;
+    background: #ed145b;
+    border-radius: 360px;
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+    color: white;
+}
+.green_ball{
+    width: 24px;
+    height: 24px;
+    background:rgb(20, 237, 110);
+    border-radius: 360px;
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+    color: white;
+}
+.ball-holder{
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+    width: 100%!important;
+}

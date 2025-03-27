@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaHome, FaChartLine, FaMap, FaTh, FaMoneyBillAlt } from 'react-icons/fa'; // Exemplo de ícones
 import './styles.css';
-
+import Image from 'next/image';
+import SVGIMG from "@/public/icons/whatsapp_icon.svg";
 interface MenuItem {
   label: string;
   path?: string;
@@ -20,10 +21,6 @@ export default function Sidebar() {
     setIsMinimized(!isMinimized);
   };
   
-  // se estiver abertop deve adicionar uma margen a esquerda no body
-  const toggleMenu = (menu: string) => {
-    setExpandedMenu(expandedMenu === menu ? null : menu);
-  };
 
   const logout = () => {
     // Faz o logout
@@ -67,11 +64,22 @@ export default function Sidebar() {
       path: '/paineis',
       icon: <FaTh />,
     },
-    {
-      label: 'DataSets',
-      path: '/datasets',
-      icon: <FaTh />,
-    },
+    // {
+    //   label: 'DataSets',
+    //   path: '/datasets',
+    //   icon: <FaTh />,
+    // },
+    // {
+    //   label: 'Configurações',
+    //   path: '/configuracoes',
+    //   icon: <FaTh />,
+    // },
+    // {
+    //   label: 'Whatsapp',
+    //   path: '/whatsapp',
+    //   // public/icons/whatsapp_icon.svg
+    //   icon: <Image src={SVGIMG} alt={"WhatsApp"} width={20} height={20} />,
+    // }
     // {
     //   label: 'Sair',
     //   icon: <FaHome />,

@@ -7,5 +7,18 @@ export interface GestaoRiscoData {
     n_AD: atendimento[];
     n_gtt: atendimento[];
     n_sne: atendimento[];
+    n_tqt: atendimento[];
     n_diabetes: atendimento[];
+    visitas: {
+        ESPECIALIDADE: string;
+        PACIENTES: {
+            PACIENTE: string;
+            PRONTUARIO: number;
+            ATENDIMENTO: number;
+            OPERADORA: string;
+            VISITCOUNT: number;
+        }[]
+        VISITCOUNT: number;
+    }[]
+    n_ccids:atendimento[];
 }

@@ -2,10 +2,11 @@
 
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { useState, useEffect } from 'react';
-import { DadosAtendimento } from '../../../types/types';
+import { DadosAtendimento } from '../../types/types';
 import './styles.css';
-import '@/app/components/css/table.css';
+
 import useFetchData from '@/app/hooks/useFetchData';
+import CustomTableComponent from "@/app/components/ui/CustomTable/component";
 
 interface resposta {
     origem: string;
@@ -34,15 +35,10 @@ interface resposta {
 }
 
 interface DadosModProps {
-    isOpen: boolean; // Controla se o modal está aberto
-    onClose: () => void; // Função para fechar o modal
     dadosAtendimento: DadosAtendimento; // Dados necessários para a requisição
 }
 
-export default function DadosMod({ isOpen, onClose, dadosAtendimento }: DadosModProps) {
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
+export default function DadosMod({ dadosAtendimento }: DadosModProps) {
     const { data: infos, loading } = useFetchData<Array<resposta>>({
         endpoint: 'detalhesmod',
         body: { 
@@ -51,158 +47,95 @@ export default function DadosMod({ isOpen, onClose, dadosAtendimento }: DadosMod
         }, // Só envia o body se dadosAtendimento existir
     });
 
-    const columns: ColumnDef<resposta>[] = [
-        {
-            header: 'Origem',
-            accessorKey: 'origem',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Especialidade',
-            accessorKey: 'especialidade',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Custo Total',
-            accessorKey: 'custo_total',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'Agendar De',
-            accessorKey: 'agendar_de',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Agendar Até',
-            accessorKey: 'agendar_ate',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Profissional',
-            accessorKey: 'profissional',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Conselho',
-            accessorKey: 'conselho',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Empresa',
-            accessorKey: 'empresa',
-            cell: info => <span>{info.getValue() as string}</span>,
-        },
-        {
-            header: 'Qtde',
-            accessorKey: 'qtde',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'Base',
-            accessorKey: 'base',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'Bonus',
-            accessorKey: 'bonus',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'TxAdm',
-            accessorKey: 'tx_adm',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'INSS',
-            accessorKey: 'inss',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'FGTS',
-            accessorKey: 'fgts',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-        {
-            header: 'Provisoes',
-            accessorKey: 'provisoes',
-            cell: info => <span>{info.getValue() as number}</span>,
-        },
-    ];
 
-    const table = useReactTable({
-        data: infos ?? [],
-        columns,
-        state: {
-            sorting,
-            columnFilters,
-        },
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-    });
-
-    if (!isOpen) return null; // Não renderiza nada se o modal não estiver aberto
+    if (loading || !infos) {
+        return <p>Carregando...</p>;
+    }
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <button onClick={onClose} className="close-button">Fechar</button>
-
-                {loading && <p>Carregando...</p>}
-                <table className='custom-table'>
-                    <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                            <tr key={headerGroup.id}>
-                                {headerGroup.headers.map(header => (
-                                    <th key={header.id} colSpan={header.colSpan} className='th_header'>
-                                        {header.isPlaceholder ? null : (
-                                            <div
-                                                className={
-                                                    header.column.getCanSort()
-                                                        ? 'cursor-pointer select-none'
-                                                        : ''
-                                                }
-                                                onClick={header.column.getToggleSortingHandler()}
-                                                title={
-                                                    header.column.getCanSort()
-                                                        ? header.column.getNextSortingOrder() === 'asc'
-                                                            ? 'Sort ascending'
-                                                            : header.column.getNextSortingOrder() === 'desc'
-                                                                ? 'Sort descending'
-                                                                : 'Clear sort'
-                                                        : undefined
-                                                }
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                                {{
-                                                    asc: ' 🔼',
-                                                    desc: ' 🔽',
-                                                }[header.column.getIsSorted() as string] ?? null}
-                                            </div>
-                                        )}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map(row => (
-                            <tr key={row.id}>
-                                {row.getVisibleCells().map(cell => (
-                                    <td key={cell.id} className='td_cell'>
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <CustomTableComponent
+            columns={
+                [
+                    {
+                        header: 'Origem',
+                        accessorKey: 'origem',
+                        cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Especialidade',
+                        accessorKey: 'especialidade',
+                        cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Custo Total',
+                        accessorKey: 'custo_total',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'Agendar De',
+                        accessorKey: 'agendar_de',
+                        cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Agendar Até',
+                        accessorKey: 'agendar_ate',
+                        cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Profissional',
+                        accessorKey: 'profissional',
+                        cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Conselho',
+                        accessorKey: 'conselho',
+                        cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Empresa',
+                        accessorKey: 'empresa',
+                        cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
+                    },
+                    {
+                        header: 'Qtde',
+                        accessorKey: 'qtde',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'Base',
+                        accessorKey: 'base',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'Bonus',
+                        accessorKey: 'bonus',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'TxAdm',
+                        accessorKey: 'tx_adm',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'INSS',
+                        accessorKey: 'inss',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'FGTS',
+                        accessorKey: 'fgts',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                    {
+                        header: 'Provisoes',
+                        accessorKey: 'provisoes',
+                        cell: info => <span>{info.getValue() as number}</span>,
+                    },
+                ]
+            }
+            data={infos}
+        />
     );
 }

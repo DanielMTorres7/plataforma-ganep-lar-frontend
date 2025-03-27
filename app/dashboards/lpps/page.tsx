@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import '../styles.css';
 import './styles.css';
-import '@/app/components/css/table.css';
+
 import MultiSelectComponent from "@/app/components/ui/MultiSelect/component";
 import DatePickerComponent from "@/app/components/ui/DatePicker/component";
 
@@ -12,6 +12,8 @@ import InfoShower from "../components/InfoShower/component";
 import useFetchData from '@/app/hooks/useFetchData';
 import { useDateRange } from "@/app/hooks/useDateRange";
 import CustomTableComponent from "@/app/components/ui/CustomTable/component";
+import DownloadButton from "@/app/components/ui/buttons/DownloadButton/component";
+import CustomModal from "@/app/components/ui/CustomModal/component";
 interface LppTable {
     PACIENTE: string;
     ATENDIMENTO: string;
@@ -40,6 +42,8 @@ interface LppData {
 }
 
 export default function LPPDashboard() {
+    const [trigger, setTrigger] = useState(false);
+    const [modalContent, setModalContent] = useState<React.ReactNode>(<></>);
     const { startDate, endDate, setStartDate, setEndDate } = useDateRange();
     const [selectedOperadoras, setSelectedOperadoras] = useState<string[]>([]);
     const { data: LppData, loading } = useFetchData<LppData>({
@@ -62,6 +66,15 @@ export default function LPPDashboard() {
         <div className="dashboard">
             <div className="filters">
                 <p>Filtros</p>
+                <DownloadButton
+                    fileName={`lpps_${startDate.toISOString().split('T')[0]}_${endDate.toISOString().split('T')[0]}.xlsx`}
+                    body={{
+                        data_inicio: startDate.toISOString().split('T')[0],
+                        data_fim: endDate.toISOString().split('T')[0],
+                        operadoras: selectedOperadoras,
+                    }}
+                    endpoint="download"
+                />
                 <div className="filter">
                     <label>Operadoras</label>
                     <MultiSelectComponent
@@ -105,30 +118,32 @@ export default function LPPDashboard() {
                                 {
                                     label: 'Score Braden',
                                     data: (LppData.score_braden_mensal && LppData.score_braden_mensal.map((data) => data.score_braden)) || [],
-                                    backgroundColor: 'rgba(35, 118, 241, 0.6)',
                                     yAxisID: 'y',
                                 },
                                 {
                                     label: '%',
                                     data: (LppData.score_braden_mensal && LppData.score_braden_mensal.map((data) => data.percentual)) || [],
-                                    borderColor: 'rgba(241, 35, 131, 0.6)',
                                     type: 'line',
                                     yAxisID: 'yAxis',
                                 }
                             ]
                         }
-                        options={{
-                            scales: {
-                                yAxis: {
-                                    beginAtZero: true,
-                                    position: 'right', // Eixo y secundário à direita
-                                    grid: {
-                                        display: false,
-                                    },
-                                },
-                            },
-                        }}
                         title="Pacientes classificados na escala de Braden"
+                        onClick={
+                            ({ datasetIndex, index }) => {
+                                LppData.score_braden_mensal.map((data, dt_index) => {
+                                    if (dt_index === index) {
+                                        setModalContent(
+                                            <div>
+                                                <p>{'Score Braden'}</p>
+                                                <p>{data.score_braden}</p>
+                                            </div>
+                                        );
+                                        setTrigger(true);
+                                    }
+                                })
+                            }
+                        }
                     />
                 </div>
                 
@@ -141,11 +156,26 @@ export default function LPPDashboard() {
                                 {
                                     label: 'LPPs',
                                     data: (LppData.score_braden_mensal && LppData.score_braden_mensal.map((lpp) => lpp.lpps))||[],
-                                    backgroundColor: 'rgba(35, 118, 241, 0.6)',
                                 },
                             ]
                         }
                         title="Número de LPPs por Mês"
+                        onClick={
+                            ({ datasetIndex, index }) => {
+                                LppData.score_braden_mensal.map((data, dt_index) => {
+                                    if (dt_index === index) {
+                                        const dt = data.lpps; 
+                                        setModalContent(
+                                            <div>
+                                                <p>{'lpps'}</p>
+                                                <p>{dt}</p>
+                                            </div>
+                                        );
+                                        setTrigger(true);
+                                    }
+                                })
+                            }
+                        }
                     />
                 </div>
 
@@ -158,7 +188,8 @@ export default function LPPDashboard() {
                                 {
                                     header: 'Paciente',
                                     accessorKey: 'PACIENTE',
-                                    cell: info => <span>{info.getValue() as string}</span>,
+                                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                                 },
                                 {
                                     header: 'Data Ocorrência',
@@ -171,13 +202,22 @@ export default function LPPDashboard() {
                                 {
                                     header: 'Operadora',
                                     accessorKey: 'OPERADORA',
-                                    cell: info => <span>{info.getValue() as string}</span>,
+                                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span>{info.getValue() as string}</span>,
                                 },
                             ]
                         }
                     />
                 </div>
             </div>
+            <CustomModal
+                opener={<></>}
+                size="large"
+                trigger={trigger}
+                onClose={() => setTrigger(false)}
+            >
+                {modalContent}
+            </CustomModal>
         </div>
     );
 }

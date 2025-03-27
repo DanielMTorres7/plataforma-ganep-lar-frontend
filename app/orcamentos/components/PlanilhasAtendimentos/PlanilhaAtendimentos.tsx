@@ -2,29 +2,17 @@
 
 import { useState } from 'react';
 import { useReactTable, getCoreRowModel, getFilteredRowModel, getSortedRowModel, ColumnDef, flexRender, SortingState, ColumnFiltersState } from '@tanstack/react-table';
-import { DadosAtendimento, PlanilhaAtendimentos } from '../../../types/types';
+import { DadosAtendimento, PlanilhaAtendimentos } from '../../types/types';
 import DadosMod from '../ModalInfos/ModalInfos';
-import '@/app/components/css/table.css';
+import CustomTableComponent from '@/app/components/ui/CustomTable/component';
+import CustomModal from '@/app/components/ui/CustomModal/component';
+
 
 interface OrcamentosComponentProps {
   Atendimentos: Array<PlanilhaAtendimentos>;
 }
 
 export default function PlanilhaAtendimentosComponent({ Atendimentos }: OrcamentosComponentProps) {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedAtendimento, setSelectedAtendimento] = useState<DadosAtendimento | null>(null);
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
-    const handleOpenModal = (atendimento: DadosAtendimento) => {
-        setSelectedAtendimento(atendimento);
-        setModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setModalOpen(false);
-        setSelectedAtendimento(null);
-    };
 
     const columns: ColumnDef<PlanilhaAtendimentos>[] = [
         {
@@ -33,11 +21,14 @@ export default function PlanilhaAtendimentosComponent({ Atendimentos }: Orcament
                 {
                     header: 'Atd.',
                     accessorKey: 'atendimento.atendimento',
+                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // 
                 },
                 {
                     header: 'Paciente',
                     accessorKey: 'atendimento.paciente',
-                    cell: info => <span className='td_nome'>{info.getValue() as string}</span>,
+                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                            // cell: info => <span className='td_nome'>{info.getValue() as string}</span>,
                 },
                 {
                     header: 'Admissão',
@@ -106,9 +97,14 @@ export default function PlanilhaAtendimentosComponent({ Atendimentos }: Orcament
                     header: 'Custo Total',
                     accessorKey: 'mao_obra_direta.custo_total',
                     cell: info => (
-                        <a onClick={() => handleOpenModal(info.row.original.atendimento)} style={{ cursor: 'pointer', color: 'blue' }}>
-                            {info.getValue() as string}
-                        </a>
+                        <CustomModal
+                            opener={<span style={{ cursor: 'pointer', color: 'blue' }}>{info.row.original.mao_obra_direta.custo_total}</span>}
+                            size='large'
+                        >
+                            <DadosMod
+                                dadosAtendimento={info.row.original.atendimento}
+                            />
+                        </CustomModal>
                     ),
                 },
                 {
@@ -202,82 +198,12 @@ export default function PlanilhaAtendimentosComponent({ Atendimentos }: Orcament
         },
     ];
 
-    const table = useReactTable({
-        data: Atendimentos,
-        columns,
-        state: {
-            sorting,
-            columnFilters,
-        },
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-    });
-
     return (
         <div className='table_holder'>
-            <table className='custom-table'>
-                <thead>
-                    {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (
-                                <th key={header.id} colSpan={header.colSpan} className='th_header'>
-                                    {header.isPlaceholder ? null : (
-                                        <div
-                                            className={
-                                            header.column.getCanSort()
-                                                ? 'cursor-pointer select-none'
-                                                : ''
-                                            }
-                                            onClick={header.column.getToggleSortingHandler()}
-                                            title={
-                                            header.column.getCanSort()
-                                                ? header.column.getNextSortingOrder() === 'asc'
-                                                ? 'Sort ascending'
-                                                : header.column.getNextSortingOrder() === 'desc'
-                                                    ? 'Sort descending'
-                                                    : 'Clear sort'
-                                                : undefined
-                                            }
-                                        >
-                                            {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                            )}
-                                            {{
-                                            asc: ' 🔼',
-                                            desc: ' 🔽',
-                                            }[header.column.getIsSorted() as string] ?? null}
-                                        </div>
-                                        )}
-                                    
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map(row => (
-                        <tr key={row.id}>
-                            {row.getVisibleCells().map(cell => (
-                                <td key={cell.id} className='td_cell'>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            {selectedAtendimento && (
-                <DadosMod
-                    isOpen={modalOpen}
-                    onClose={handleCloseModal}
-                    dadosAtendimento={selectedAtendimento}
-                />
-            )}
+            <CustomTableComponent
+                columns={columns}
+                data={Atendimentos}
+            />
         </div>
     );
 }

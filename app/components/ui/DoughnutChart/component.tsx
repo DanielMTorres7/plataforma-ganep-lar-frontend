@@ -31,7 +31,7 @@ interface DoughnutChartProps {
 
 export default function SingleGauge({ label, value, title, options, circumference, max, width }: DoughnutChartProps) {  
     width = width? width: 200;
-
+    // tooltip deve ser value 
     const datasets: ChartDataset[] = [
         {
             label: label,
@@ -49,6 +49,7 @@ export default function SingleGauge({ label, value, title, options, circumferenc
         rotation: -90,
         responsive: true,
         aspectRatio: 1.5,
+        
         plugins: {
             legend: {
                 display: false,

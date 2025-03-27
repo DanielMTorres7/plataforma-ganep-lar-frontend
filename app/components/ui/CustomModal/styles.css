@@ -20,15 +20,15 @@
 }
 
 .modal-content.small {
-    width: 300px;
+    width: 30%;
 }
 
 .modal-content.medium {
-    width: 500px;
+    width: 50%;
 }
 
 .modal-content.large {
-    width: 1200px;
+    width: 80%;
 }
 
 .modal-close {

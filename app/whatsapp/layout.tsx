@@ -16,18 +16,11 @@ export default function RootLayout({
   return (
     <>
     <Sidebar/>
-      <div className="content">    
-        <NavBar>
-          <ul className="nav-links">
-              <li>
-                  <PrimaryButton text="Atendimentos Completo" onClick={() => router.push('/datasets/atendimentos_completo')}/>
-              </li>
-          </ul>
-        </NavBar>
-        <div className="content-body">
-            {children}
-        </div>
+    <div className="content">    
+      <div className="content-body">
+          {children}
       </div>
+    </div>
     </>
   );
 }
