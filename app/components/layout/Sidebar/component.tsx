@@ -14,29 +14,18 @@ interface MenuItem {
 
 export default function Sidebar() {
   const [isMinimized, setIsMinimized] = useState(true);
-  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
-  const [currentPath, setCurrentPath] = useState<string>(window.location.pathname);
 
   const toggleSidebar = () => {
     setIsMinimized(!isMinimized);
   };
   
-
   const logout = () => {
-    // Faz o logout
-    // Redireciona para a tela de login
     if (typeof window !== "undefined") {
       window.location.href = '/login';
     }
   };
 
-  const redirect = (path: string) => {
-    if (typeof window !== "undefined") {
-    window.location.href = path;
-    setCurrentPath(path); // Atualiza o caminho atual
-    }
-  };
-
+  
   // Dados do menu
   const menuItems: MenuItem[] = [
     {
@@ -89,7 +78,13 @@ export default function Sidebar() {
 
   // Verifica se o item do menu está ativo (correspondente à URL atual)
   const isActive = (path: string) => {
-    return currentPath === path;
+    return window.location.pathname === path;
+  };
+
+  const redirect = (path: string) => {
+    if (typeof window !== "undefined") {
+      window.location.href = path;
+    }
   };
 
   return (
