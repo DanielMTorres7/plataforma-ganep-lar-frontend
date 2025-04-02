@@ -13,7 +13,7 @@ export default function Login() {
   const handleLogin = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://whatsapp.dstorres.com.br:5000/api/login', {
+      const response = await fetch('https://gestaoativa1.dstorres.com.br/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

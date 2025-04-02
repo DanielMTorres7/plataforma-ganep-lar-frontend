@@ -18,7 +18,7 @@ const useFetchData = <T,>({ endpoint, body, defaultData , preFilter}: FetchDataO
         const token = localStorage.getItem('token');
         console.log('Token:', token);
         try {
-            const response = await fetch(`https://whatsapp.dstorres.com.br:5000/${endpoint}`, {
+            const response = await fetch(`https://gestaoativa1.dstorres.com.br/${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
