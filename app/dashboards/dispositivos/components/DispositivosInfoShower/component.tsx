@@ -30,27 +30,22 @@ const DispositivosInfoShower: React.FC<InfoShowerProps> = ({ text, value, classN
                     [
                         {
                             header: 'Prontuário',
-                            accessorKey: 'PRONTUARIO',
-                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as number}</span>,
+                            accessorKey: 'PRONTUARIO'
                         },
                         {
                             header: 'Atd.',
-                            accessorKey: 'ATENDIMENTO',
-                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as number}</span>,
+                            accessorKey: 'ATENDIMENTO'
                         },
                         {
                             header: 'Paciente',
                             accessorKey: 'PACIENTE',
-                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as string}</span>,
+                            cell: info => <span>{String(info.getValue() as string).split(" ").map((n)=>{
+                                return n.charAt(0).toUpperCase();
+                            })}</span>
                         },
                         {
                             header: 'Operadora',
-                            accessorKey: 'OPERADORA',
-                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as string}</span>,
+                            accessorKey: 'OPERADORA'
                         },
                         {
                             header: 'Entrada',

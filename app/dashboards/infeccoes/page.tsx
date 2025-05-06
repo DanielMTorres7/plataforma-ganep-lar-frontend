@@ -183,11 +183,20 @@ export default function MovimentacoesDashboard() {
                         data={InfeccoesData.table_last_infeccoes}
                         columns={
                             [
+                                // {
+                                //     header: 'Prontuário',
+                                //     accessorKey: 'PRONTUARIO'
+                                // },
+                                {
+                                    header: 'Atendimento',
+                                    accessorKey: 'ATENDIMENTO'
+                                },
                                 {
                                     header: 'Paciente',
                                     accessorKey: 'NOME_PACIENTE',
-                                    // cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <>{info.getValue() as string}</>,
+                                    cell: info => <span>{String(info.getValue() as string).split(" ").map((n)=>{
+                                        return n.charAt(0).toUpperCase();
+                                    })}</span>
                                 },
                                 {
                                     header: 'Data Ocorrência',
@@ -204,9 +213,7 @@ export default function MovimentacoesDashboard() {
                                 },
                                 {
                                     header: 'Operadora',
-                                    accessorKey: 'OPERADORA',
-                                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as string}</span>,
+                                    accessorKey: 'OPERADORA'
                                 },
                             ]
                         }

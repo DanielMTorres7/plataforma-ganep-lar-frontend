@@ -186,10 +186,19 @@ export default function LPPDashboard() {
                         columns={
                             [
                                 {
+                                    header: 'Prontuário',
+                                    accessorKey: 'PRONTUARIO'
+                                },
+                                {
+                                    header: 'Atendimento',
+                                    accessorKey: 'ATENDIMENTO'
+                                },
+                                {
                                     header: 'Paciente',
                                     accessorKey: 'PACIENTE',
-                                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as string}</span>,
+                                    cell: info => <span>{String(info.getValue() as string).split(" ").map((n)=>{
+                                        return n.charAt(0).toUpperCase();
+                                    })}</span>,
                                 },
                                 {
                                     header: 'Data Ocorrência',
@@ -201,9 +210,7 @@ export default function LPPDashboard() {
                                 },
                                 {
                                     header: 'Operadora',
-                                    accessorKey: 'OPERADORA',
-                                    cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as string}</span>,
+                                    accessorKey: 'OPERADORA'
                                 },
                             ]
                         }

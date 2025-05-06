@@ -28,29 +28,24 @@ export default function Sidebar() {
   
   // Dados do menu
   const menuItems: MenuItem[] = [
-    {
-      label: 'Home',
-      path: '/',
-      icon: <FaHome />,
-    },
-    {
-      label: 'Orçamentos',
-      path: '/orcamentos',
-      icon: <FaMoneyBillAlt />,
-    },
+    // {
+    //   label: 'Home',
+    //   path: '/',
+    //   icon: <FaHome />,
+    // },
     {
       label: 'DashBoards',
       icon: <FaChartLine />,
-      path: '/dashboards',
+      path: '/dashboards/lpps',
     },
     {
       label: 'Mapa',
-      path: '/mapa',
+      path: '/mapa/produtosconvenio',
       icon: <FaMap />,
     },
     {
       label: 'Paineis',
-      path: '/paineis',
+      path: '/paineis/gestaorisco',
       icon: <FaTh />,
     },
     // {

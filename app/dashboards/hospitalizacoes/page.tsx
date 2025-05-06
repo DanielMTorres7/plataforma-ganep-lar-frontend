@@ -142,10 +142,19 @@ export default function HospitalizacoesDashboard() {
                         data={hospitalizacoesData.table_ultimas_hospitalizacoes}
                         columns={[
                             {
+                                header: 'Prontuário',
+                                accessorKey: 'PRONTUARIO'
+                            },
+                            {
+                                header: 'Atendimento',
+                                accessorKey: 'ATENDIMENTO'
+                            },
+                            {
                                 header: 'Paciente',
                                 accessorKey: 'paciente',
-                                cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                                // cell: info => <span>{info.getValue() as string}</span>,
+                                cell: info => <span>{String(info.getValue() as string).split(" ").map((n)=>{
+                                    return n.charAt(0).toUpperCase();
+                                })}</span>
                             },
                             {
                                 header: 'Data Ocorrência',
@@ -157,9 +166,7 @@ export default function HospitalizacoesDashboard() {
                             },
                             {
                                 header: 'Operadora',
-                                accessorKey: 'operadora',
-                                cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // cell: info => <span>{info.getValue() as string}</span>,
+                                accessorKey: 'operadora'
                             },
                         ]}
                         key={'internacoes'}

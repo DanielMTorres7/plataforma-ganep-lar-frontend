@@ -35,9 +35,7 @@ export default function LPPDashboard() {
                     [
                         {
                             header: 'Operadora',
-                            accessorKey: 'OPERADORA',
-                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // 
+                            accessorKey: 'OPERADORA'
                         },
                         {
                             header: 'Visitas',

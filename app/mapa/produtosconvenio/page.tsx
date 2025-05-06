@@ -18,8 +18,8 @@ interface ProdutosConvenio {
 interface Diario{
     dia: string;
     total: number;
-    entradas?: string[];
-    saidas?: string[];
+    entradas?: object[];
+    saidas?: object[];
 }
 
 interface resp {
@@ -100,8 +100,6 @@ export default function OrcamentosPage() {
                             header: 'Operadora',
                             accessorKey: 'operadora',
                             enableSorting: true,
-                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                            // 
                         },
                         {
                             header: 'Produto',
@@ -117,7 +115,8 @@ export default function OrcamentosPage() {
                                 const cellData = (tableData[index] as any)[info.column.id] as Diario;
                                 const entradas = cellData.entradas || [];
                                 const saidas = cellData.saidas || [];
-                                let className = (entradas.length > 0 ? 'greater' : saidas.length > 0 ? 'lesser' : '') + ' td-number';
+                                // Caso tenha entradas pinta de verde, caso tenha saidas pinta de vermelho, caso tenha ambos pinta de amarelo
+                                let className = (entradas.length > 0 ? saidas.length > 0 ? 'yellow' : 'greater' : saidas.length > 0 ? 'lesser' : '') + ' td-number';
                                 return (
                                     entradas.length > 0 || saidas.length > 0 ?
                                         <InfoCellCompoent

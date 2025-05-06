@@ -43,7 +43,11 @@ export default function CustomTableComponent({ data, columns, className, style }
                                                 ? 'cursor-pointer select-none'
                                                 : ''
                                             }
-                                            onClick={header.column.getToggleSortingHandler()}
+                                            onClick={
+                                                header.column.getCanSort()
+                                                ?header.column.getToggleSortingHandler()
+                                                : undefined
+                                            }
                                             title={
                                             header.column.getCanSort()
                                                 ? header.column.getNextSortingOrder() === 'asc'

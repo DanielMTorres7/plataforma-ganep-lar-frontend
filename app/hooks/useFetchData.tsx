@@ -18,7 +18,7 @@ const useFetchData = <T,>({ endpoint, body, defaultData , preFilter}: FetchDataO
         const token = localStorage.getItem('token');
         console.log('Token:', token);
         try {
-            const response = await fetch(`https://gestaoativa1.dstorres.com.br/${endpoint}`, {
+            const response = await fetch(`http://192.168.100.250:5000/${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

@@ -54,71 +54,73 @@ export default function LPPDashboard() {
                 value={GestaoRiscoData.n_atendimentos}
                 style={{ width: '100%'}}
             />
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'ID'}
-                    title="ID"
-                    atendimentos={GestaoRiscoData.n_ID}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
+            <div style={{ width: '60%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'ID'}
+                        title="ID"
+                        atendimentos={GestaoRiscoData.n_ID}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        atendimentos={GestaoRiscoData.n_AD}
+                        label={'AD'}
+                        title="AD"
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'Risco Nutri'}
+                        title="Risco Nutri"
+                        atendimentos={GestaoRiscoData.n_risco_nutri}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'Diabetes'}
+                        title="Diabetes"
+                        atendimentos={GestaoRiscoData.n_diabetes}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'GTT'}
+                        title="GTT"
+                        atendimentos={GestaoRiscoData.n_gtt}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'TQT'}
+                        title="TQT"
+                        atendimentos={GestaoRiscoData.n_tqt}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'SNE'}
+                        title="SNE"
+                        atendimentos={GestaoRiscoData.n_sne}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
+                <div className="dashboard__gauge">
+                    <AtendimentosInfoShower
+                        label={'CCIDS'}
+                        title="CCIDS"
+                        atendimentos={GestaoRiscoData.n_ccids}
+                        max={GestaoRiscoData.n_atendimentos}
+                    />
+                </div>
             </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    atendimentos={GestaoRiscoData.n_AD}
-                    label={'AD'}
-                    title="AD"
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'Risco Nutri'}
-                    title="Risco Nutri"
-                    atendimentos={GestaoRiscoData.n_risco_nutri}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'Diabetes'}
-                    title="Diabetes"
-                    atendimentos={GestaoRiscoData.n_diabetes}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'GTT'}
-                    title="GTT"
-                    atendimentos={GestaoRiscoData.n_gtt}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'TQT'}
-                    title="TQT"
-                    atendimentos={GestaoRiscoData.n_tqt}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'SNE'}
-                    title="SNE"
-                    atendimentos={GestaoRiscoData.n_sne}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div className="dashboard__gauge">
-                <AtendimentosInfoShower
-                    label={'CCIDS'}
-                    title="CCIDS"
-                    atendimentos={GestaoRiscoData.n_ccids}
-                    max={GestaoRiscoData.n_atendimentos}
-                />
-            </div>
-            <div style={{ width: '30%' }}>
+            <div style={{ width: '35%' }}>
                 <Chart
                     type="doughnut"
                     data={{
@@ -162,24 +164,23 @@ export default function LPPDashboard() {
                                 <CustomTableComponent
                                     columns={[
                                         {
-                                            header: 'Paciente',
-                                            accessorKey: 'PACIENTE',
-                                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
-                                        },
-                                        {
                                             header: 'Prontuário',
-                                            accessorKey: 'PRONTUARIO',
-                                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                                            accessorKey: 'PRONTUARIO'
                                         },
                                         {
                                             header: 'Atendimento',
-                                            accessorKey: 'ATENDIMENTO',
-                                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                                            accessorKey: 'ATENDIMENTO'
+                                        },
+                                        {
+                                            header: 'Paciente',
+                                            accessorKey: 'PACIENTE',
+                                            cell: info => <span>{String(info.getValue() as string).split(" ").map((n)=>{
+                                                return n.charAt(0).toUpperCase();
+                                            })}</span>
                                         },
                                         {
                                             header: 'Operadora',
-                                            accessorKey: 'OPERADORA',
-                                            cell: info => <span>{String(info.getValue() as string).substring(0, 2)}**(Dado Protegido)</span>,
+                                            accessorKey: 'OPERADORA'
                                         },
                                         {
                                             header: 'Visitas',
@@ -194,7 +195,7 @@ export default function LPPDashboard() {
                             );
                         },
                         responsive: true,
-                        aspectRatio: 1.5,
+                        aspectRatio: 1.2,
                         plugins: {
                             title: {
                                 display: true,
